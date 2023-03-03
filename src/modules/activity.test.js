@@ -26,7 +26,16 @@ describe('ToDo List Application', () => {
   describe('deleteTask()', () => {
     test('should remove a task from the tasks array', () => {
       // Arrange
-      const tasks = [        { description: 'Task 1', completed: false, index: 0 },        { description: 'Task 2', completed: false, index: 1 },      ];
+      const tasks = [{
+        description: 'Task 1',
+        completed: false,
+        index: 0,
+      },
+      {
+        description: 'Task 2',
+        completed: false,
+        index: 1,
+      }];
       const index = 0;
 
       // Act

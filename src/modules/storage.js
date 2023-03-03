@@ -9,7 +9,7 @@ const getItemFromLocalStorage = () => {
   return data;
 };
 
-//Save data in the localStorage
+// Save data in the localStorage
 const saveItemToLocalStorage = (tasks) => {
   localStorage.setItem('tasks', JSON.stringify(tasks));
 };

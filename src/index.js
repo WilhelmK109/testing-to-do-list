@@ -12,8 +12,6 @@ import {
 } from './modules/storage.js';
 
 document.addEventListener('DOMContentLoaded', () => {
-
-  // Add the remaining functions and event listeners here
   const displayTasks = () => {
     const tasks = getItemFromLocalStorage();
     const toDoList = document.getElementById('to-do-list');
@@ -21,17 +19,14 @@ document.addEventListener('DOMContentLoaded', () => {
     tasks.forEach((task, index) => {
       const toDoItem = document.createElement('li');
       toDoItem.className = ('to-do-task');
-  
       const anotherItem = document.createElement('div');
       anotherItem.className = 'another-item';
-  
       const taskInput = document.createElement('input');
       taskInput.className = 'checkbox';
       taskInput.type = 'checkbox';
       if (task.completed) {
         taskInput.setAttribute('checked', '');
       }
-  
       taskInput.onchange = (e) => {
         if (e.target.checked) {
           tasks[index].completed = true;
@@ -42,9 +37,9 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         saveItemToLocalStorage(tasks);
       };
-  
+
       anotherItem.appendChild(taskInput);
-  
+
       const taskDescription = document.createElement('p');
       taskDescription.classList.add('description');
       if (task.completed) {
@@ -54,7 +49,7 @@ document.addEventListener('DOMContentLoaded', () => {
       }
       taskDescription.innerText = task.description;
       anotherItem.appendChild(taskDescription);
-  
+
       const editTaskInput = document.createElement('input');
       editTaskInput.className = 'invisible';
       editTaskInput.type = 'text';
@@ -68,7 +63,7 @@ document.addEventListener('DOMContentLoaded', () => {
       });
       anotherItem.appendChild(editTaskInput);
       toDoItem.appendChild(anotherItem);
-  
+
       const deleteBtn = document.createElement('span');
       deleteBtn.className = 'invisible';
       deleteBtn.innerHTML = 'delete';
@@ -77,14 +72,14 @@ document.addEventListener('DOMContentLoaded', () => {
         displayTasks();
       });
       toDoItem.appendChild(deleteBtn);
-  
+
       const anotherDelBtn = document.createElement('span');
       anotherDelBtn.className = 'material-symbols-outlined';
       anotherDelBtn.innerHTML = 'edit';
       anotherDelBtn.addEventListener('click', () => {
         anotherDelBtn.className = 'invisible';
         deleteBtn.className = 'material-symbols-outlined';
-  
+
         taskDescription.className = 'invisible';
         editTaskInput.className = 'visible';
         toDoItem.classList.toggle('set-focus-bg');
@@ -92,7 +87,7 @@ document.addEventListener('DOMContentLoaded', () => {
       });
       toDoItem.appendChild(anotherDelBtn);
       toDoList.appendChild(toDoItem);
-  
+
       const clearListBtn = document.querySelector('[clear-list-btn');
       clearListBtn.addEventListener('click', () => {
         deleteCompletedTasks(tasks);
@@ -126,7 +121,7 @@ document.addEventListener('DOMContentLoaded', () => {
       displayTasks(newTasks);
     }
   });
-  
+
   const createNewTask = document.querySelector('to-do-list');
   createNewTask.addEventListener('submit', (event) => {
     event.preventDefault();
@@ -134,14 +129,14 @@ document.addEventListener('DOMContentLoaded', () => {
     const tasks = createTask(getItemFromLocalStorage(), newTaskDescription);
     displayTasks(tasks);
   });
-  
+
   window.addEventListener('load', () => {
     const createNewTask = document.getElementById('add-new-task');
     createNewTask.addEventListener('click', () => {
       createTask();
       displayTasks();
     });
-  
+
     const taskInput = document.getElementById('to-do-input');
     taskInput.addEventListener('keypress', (e) => {
       if (e.key === 'Enter') {
