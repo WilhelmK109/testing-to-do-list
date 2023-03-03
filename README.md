@@ -105,7 +105,7 @@ To run the project, execute the following command: npm run server
 
 ### Run tests
 
-To run tests, run the following command:
+To run tests, run the following command: npm test
 
 
 ### Deployment
