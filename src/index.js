@@ -3,7 +3,7 @@ import {
   createTask,
   deleteCompletedTasks,
   deleteTask,
-  updateTask,
+  // updateTask,
 } from './modules/activity.js';
 
 import {
@@ -54,7 +54,7 @@ document.addEventListener('DOMContentLoaded', () => {
       editTaskInput.className = 'invisible';
       editTaskInput.type = 'text';
       editTaskInput.value = task.description;
-      
+
       const editTask = () => {
         taskDescription.classList.add('invisible');
         editTaskInput.classList.remove('invisible');
@@ -67,7 +67,7 @@ document.addEventListener('DOMContentLoaded', () => {
           }
         });
       };
-      
+
       const editButton = document.createElement('i');
       editButton.className = 'fas fa-edit edit-button';
       editButton.addEventListener('click', editTask);
@@ -85,21 +85,6 @@ document.addEventListener('DOMContentLoaded', () => {
       });
       toDoItem.appendChild(deleteBtn);
 
-      // const anotherDelBtn = document.createElement('span');
-      // anotherDelBtn.className = 'material-symbols-outlined';
-      // anotherDelBtn.innerHTML = 'edit';
-      // anotherDelBtn.addEventListener('click', () => {
-      //   anotherDelBtn.className = 'invisible';
-      //   deleteBtn.className = 'material-symbols-outlined';
-
-      //   taskDescription.className = 'invisible';
-      //   editTaskInput.className = 'visible';
-      //   toDoItem.classList.toggle('set-focus-bg');
-      //   editTaskInput.focus();
-      // });
-      // toDoItem.appendChild(anotherDelBtn);
-      // toDoList.appendChild(toDoItem);
-
       const clearListBtn = document.querySelector('[clear-list-btn');
       clearListBtn.addEventListener('click', () => {
         deleteCompletedTasks(tasks);
@@ -108,10 +93,9 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   };
 
-  // Call the displayTasks function here
   displayTasks();
 
-  // Add event listeners to the buttons here
+  // Add event listeners to the buttons
   document.addEventListener('DOMContentLoaded', () => {
     const clearCompletedBtn = document.querySelector('#clear-completed');
     clearCompletedBtn.addEventListener('click', () => {

@@ -1,4 +1,4 @@
-import { getItemFromLocalStorage, saveItemToLocalStorage } from './storage.js';
+import { saveItemToLocalStorage } from './storage.js';
 
 const createTask = (tasks, newTaskDescription) => {
   const tasksArray = tasks || [];
