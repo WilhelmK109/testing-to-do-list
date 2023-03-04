@@ -1,4 +1,4 @@
-const { updateTask, deleteCompletedTasks } = require('../modules/activity.js');
+const { updateTask, deleteCompletedTasks, changeCompletedStatus } = require('../modules/activity.js');
 
 global.localStorage = {
   getItem: jest.fn(),
@@ -53,5 +53,38 @@ describe('deleteCompletedTasks function', () => {
     const updatedTasks = deleteCompletedTasks(tasks);
     expect(updatedTasks.length).toEqual(1);
     expect(updatedTasks[0].description).toEqual('Task 1');
+  });
+});
+
+describe('changeCompletedStatus function', () => {
+  let tasks;
+
+  beforeEach(() => {
+    tasks = [
+      {
+        description: 'Task 1',
+        completed: false,
+      },
+      {
+        description: 'Task 2',
+        completed: true,
+      },
+      {
+        description: 'Task 3',
+        completed: true,
+      },
+    ];
+  });
+
+  test('should update the completed status of a task from true to false', () => {
+    const index = 1;
+    const updatedTasks = changeCompletedStatus(tasks, index);
+    expect(updatedTasks[index].completed).toBe(false);
+  });
+
+  test('should update the completed status of a task from false to true', () => {
+    const index = 0;
+    const updatedTasks = changeCompletedStatus(tasks, index);
+    expect(updatedTasks[index].completed).toBe(true);
   });
 });

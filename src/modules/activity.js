@@ -41,6 +41,13 @@ const deleteCompletedTasks = (tasks) => {
   return incomplete;
 };
 
+const changeCompletedStatus = (tasks, index) => {
+  const newTasks = [...tasks];
+  newTasks[index].completed = !newTasks[index].completed;
+  saveItemToLocalStorage(newTasks);
+  return newTasks;
+};
+
 export {
-  createTask, deleteCompletedTasks, deleteTask, updateTask,
+  createTask, deleteCompletedTasks, deleteTask, updateTask, changeCompletedStatus,
 };
