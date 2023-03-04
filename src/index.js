@@ -3,7 +3,7 @@ import {
   createTask,
   deleteCompletedTasks,
   deleteTask,
-  updateTask,
+  // updateTask,
 } from './modules/activity.js';
 
 import {
@@ -54,15 +54,27 @@ document.addEventListener('DOMContentLoaded', () => {
       editTaskInput.className = 'invisible';
       editTaskInput.type = 'text';
       editTaskInput.value = task.description;
-      editTaskInput.addEventListener('keypress', (e) => {
-        if (e.keycode === 13) {
-          toDoItem.classList.toggle('set-focus-bg');
-          updateTask(tasks, index, e.target.value);
-          displayTasks();
-        }
-      });
-      anotherItem.appendChild(editTaskInput);
+
+      const editTask = () => {
+        taskDescription.classList.add('invisible');
+        editTaskInput.classList.remove('invisible');
+        editTaskInput.focus();
+        editTaskInput.addEventListener('keypress', (e) => {
+          if (e.keycode === 13) {
+            tasks[index].description = editTaskInput.value;
+            saveItemToLocalStorage(tasks);
+            displayTasks();
+          }
+        });
+      };
+
+      const editButton = document.createElement('i');
+      editButton.className = 'fas fa-edit edit-button';
+      editButton.addEventListener('click', editTask);
+      anotherItem.appendChild(editButton);
+
       toDoItem.appendChild(anotherItem);
+      toDoList.appendChild(toDoItem);
 
       const deleteBtn = document.createElement('span');
       deleteBtn.className = 'invisible';
@@ -73,21 +85,6 @@ document.addEventListener('DOMContentLoaded', () => {
       });
       toDoItem.appendChild(deleteBtn);
 
-      const anotherDelBtn = document.createElement('span');
-      anotherDelBtn.className = 'material-symbols-outlined';
-      anotherDelBtn.innerHTML = 'edit';
-      anotherDelBtn.addEventListener('click', () => {
-        anotherDelBtn.className = 'invisible';
-        deleteBtn.className = 'material-symbols-outlined';
-
-        taskDescription.className = 'invisible';
-        editTaskInput.className = 'visible';
-        toDoItem.classList.toggle('set-focus-bg');
-        editTaskInput.focus();
-      });
-      toDoItem.appendChild(anotherDelBtn);
-      toDoList.appendChild(toDoItem);
-
       const clearListBtn = document.querySelector('[clear-list-btn');
       clearListBtn.addEventListener('click', () => {
         deleteCompletedTasks(tasks);
@@ -96,15 +93,17 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   };
 
-  // Call the displayTasks function here
   displayTasks();
 
-  // Add event listeners to the buttons here
-  const clearCompletedButton = document.getElementById('clear-completed');
-  clearCompletedButton.addEventListener('click', () => {
-    const tasks = getItemFromLocalStorage();
-    const newTasks = deleteCompletedTasks(tasks);
-    displayTasks(newTasks);
+  // Add event listeners to the buttons
+  document.addEventListener('DOMContentLoaded', () => {
+    const clearCompletedBtn = document.querySelector('#clear-completed');
+    clearCompletedBtn.addEventListener('click', () => {
+      const tasks = getItemFromLocalStorage();
+      const updatedTasks = deleteCompletedTasks(tasks);
+      saveItemToLocalStorage(updatedTasks);
+      displayTasks();
+    });
   });
 
   const deleteAllButton = document.getElementById('delete-all');

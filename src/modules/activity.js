@@ -1,4 +1,4 @@
-import { getItemFromLocalStorage, saveItemToLocalStorage } from './storage.js';
+import { saveItemToLocalStorage } from './storage.js';
 
 const createTask = (tasks, newTaskDescription) => {
   const tasksArray = tasks || [];
@@ -14,24 +14,13 @@ const createTask = (tasks, newTaskDescription) => {
   return tasksArray;
 };
 
-const updateTask = (taskId, el) => {
-  const tasks = getItemFromLocalStorage();
-  const task = tasks.find((task) => task.index === parseInt(taskId, 10));
-  if (el.hasAttribute('content-editable')) {
-    task.description = el.textContent;
-  } else {
-    const span = el.nextElementSibling;
-    const parent = el.closest('input');
-    task.completed = !task.completed;
-    if (task.completed) {
-      span.removeAttribute('content-editable');
-      span.classList.add('complete');
-    } else {
-      span.setAttribute('content-editable', 'true');
-      parent.classList.remove('complete');
-    }
-  }
-  saveItemToLocalStorage(tasks);
+const updateTask = (tasks, index, newDescription) => {
+  const updatedTasks = [...tasks];
+  updatedTasks[index] = {
+    ...tasks[index],
+    description: newDescription,
+  };
+  return updatedTasks;
 };
 
 const deleteTask = (tasks, index) => {
@@ -52,6 +41,13 @@ const deleteCompletedTasks = (tasks) => {
   return incomplete;
 };
 
+const changeCompletedStatus = (tasks, index) => {
+  const newTasks = [...tasks];
+  newTasks[index].completed = !newTasks[index].completed;
+  saveItemToLocalStorage(newTasks);
+  return newTasks;
+};
+
 export {
-  createTask, deleteCompletedTasks, deleteTask, updateTask,
+  createTask, deleteCompletedTasks, deleteTask, updateTask, changeCompletedStatus,
 };
